@@ -24,7 +24,7 @@ class ZoneController extends Controller
 
     public function create()
     {
-        $countries = Country::where('status', 1)->where('zone_id', 0)->get();
+        $countries = Country::where('status', 1)->where('zone_id', 101)->get();
         return view('backend.setup_configurations.zones.create', compact('countries'));
     }
 
@@ -45,13 +45,12 @@ class ZoneController extends Controller
     {
         $countries = Country::where('status', 1)
             ->where(function ($query) use ($zone) {
-                $query->where('zone_id', 0)
+                $query->where('zone_id', 101)
                     ->orWhere('zone_id', $zone->id);
             })
             ->get();
         return view('backend.setup_configurations.zones.edit', compact('countries', 'zone'));
     }
-
 
     public function update(ZoneRequest $request, Zone $zone)
     {

@@ -52,6 +52,36 @@
             color: #007bff;
         }
 
+
+        .video-slider .card {
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 450px; /* Set consistent height */
+        }
+
+        .video-slider .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-container video {
+            transition: transform 0.3s ease;
+        }
+
+        .video-container:hover video {
+            transform: scale(1.02);
+        }
+
+        .btn-primary {
+            background: #007bff;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
     </style>
 
     <div  class="bg-light shadow-sm">
@@ -60,36 +90,86 @@
     <div class="home-banner-area mb-3" style="">
         <div class="container">
             <div class="d-flex flex-wrap position-relative">
-                <div class="position-static d-none d-xl-block">
+                <!-- Categories -->
+                <div class="position-static d-none d-xl-block" style="width: 20%;">
                     @include('frontend.'.get_setting("homepage_select").'.partials.category_menu')
                 </div>
 
-                <!-- Sliders -->
-                <div class="home-slider">
-                    @if (get_setting('home_slider_images', null, $lang) != null)
-                        <div class="aiz-carousel dots-inside-bottom" data-autoplay="true" data-infinite="true">
-                            @php
-                                $decoded_slider_images = json_decode(get_setting('home_slider_images', null, $lang), true);
-                                $sliders = get_slider_images($decoded_slider_images);
-                                $home_slider_links = get_setting('home_slider_links', null, $lang);
-                            @endphp
-                            @foreach ($sliders as $key => $slider)
-                                <div class="carousel-box">
-                                    <a href="{{ isset(json_decode($home_slider_links, true)[$key]) ? json_decode($home_slider_links, true)[$key] : '' }}">
-                                        <!-- Image -->
-                                        <img class="d-block mw-100 img-fit overflow-hidden h-180px h-md-320px h-lg-460px overflow-hidden"
-                                            src="{{ $slider ? my_asset($slider->file_name) : static_asset('assets/img/placeholder.jpg') }}"
-                                            alt="{{ env('APP_NAME') }} promo"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
-                                    </a>
-                                </div>
-                            @endforeach
+                <!-- Sliders and Video Section -->
+                <div class="d-flex flex-grow-1" style="width: 80%;">
+                    <!-- Home Slider -->
+                    <div class="home-slider" style="width: 60%; padding-right: 15px;">
+                        @if (get_setting('home_slider_images', null, $lang) != null)
+                            <div class="aiz-carousel dots-inside-bottom" data-autoplay="true" data-infinite="true">
+                                @php
+                                    $decoded_slider_images = json_decode(get_setting('home_slider_images', null, $lang), true);
+                                    $sliders = get_slider_images($decoded_slider_images);
+                                    $home_slider_links = get_setting('home_slider_links', null, $lang);
+                                @endphp
+                                @foreach ($sliders as $key => $slider)
+                                    <div class="carousel-box">
+                                        <a href="{{ isset(json_decode($home_slider_links, true)[$key]) ? json_decode($home_slider_links, true)[$key] : '' }}">
+                                            <img class="d-block mw-100 img-fit overflow-hidden h-120px h-md-220px h-lg-320px"
+                                                src="{{ $slider ? my_asset($slider->file_name) : static_asset('assets/img/placeholder.jpg') }}"
+                                                alt="{{ env('APP_NAME') }} promo"
+                                                onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';">
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-center">{{ translate('No slider images available.') }}</p>
+                        @endif
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="video-slider" style="width: 40%; padding-left: 10px;">
+                        <div class="d-flex flex-wrap justify-content-center gap-4">
+                            @if (!empty($video_slider_files))
+                                @foreach ($video_slider_files as $key => $video)
+                                    @php
+                                        $file_location = App\Models\Upload::where('id', $video)->value('file_name');
+                                    @endphp
+
+                                    <div class="card shadow-lg border-0 position-relative" 
+                                        style="width: 100%; max-width: 320px; border-radius: 5px; overflow: hidden; background: linear-gradient(135deg, #f5f7fa, #c3cfe2); padding:3px; height: 300px;">
+                                        <!-- Decorative Frame -->
+                                        <div style="border: 2px solid #ddd; border-radius: 5px; overflow: hidden; height: 100%;">
+                                            <!-- Video Content -->
+                                            <div class="video-container" style="height: 100%; width: 100%; overflow: hidden;">
+                                                <video controls style="width: 100%; height: 100%; object-fit: cover; border-radius: 5px;">
+                                                    <!-- Ensure correct URL is used -->
+                                                    <source src="{{ my_asset($file_location) }}" type="video/mp4">
+                                                    {{ translate('Your browser does not support the video tag.') }}
+                                                </video>
+                                            </div>
+                                        </div>
+
+                                        <!-- Button or Additional Content -->
+                                        @if (!empty($video_slider_links[$key]))
+                                            <div class="card-body text-center" style="padding-top: 15px; height: 25%;">
+                                                <a href="{{ $video_slider_links[$key] }}" 
+                                                class="btn btn-primary" 
+                                                style="border-radius: 50px; font-weight: bold; padding: 10px 20px;">
+                                                    {{ translate('Watch Full Video') }}
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            @else
+                                <p class="text-center text-muted">{{ translate('No videos available.') }}</p>
+                            @endif
                         </div>
-                    @endif
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
+
+
+
 
     {{-- Banner section 1 --}}
     @if (get_setting('home_banner1_images') != null)
@@ -166,7 +246,7 @@
                     </a>
                 </div>
                 <!-- Categories -->
-                <div class="bg-white rounded px-3 px-md-4 py-4 shadow">
+                <div class=" rounded px-3 px-md-4 py-4 shadow" style="background-color:white">
                     <div class="row g-3">
                         @foreach ($featured_categories as $key => $category)
                         @php
@@ -181,7 +261,7 @@
                                             class="lazyload w-100 has-transition rounded-top"
                                             alt="{{ $category->getTranslation('name') }}"
                                             onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                            style="max-height: 150px; object-fit: cover; transition: transform 0.3s ease;">
+                                            style="max-height: 150px; object-fit:contain; transition: transform 0.3s ease;">
                                     </div>
                                     <!-- Text -->
                                     <div class="px-3 px-md-4 py-3">

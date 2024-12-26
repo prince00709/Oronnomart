@@ -257,7 +257,8 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function () {
     });
 
     Route::controller(NotificationController::class)->group(function () {
-        Route::get('/all-notifications', 'customerIndex')->name('customer.all-notifications');
+        Route::get('/all-notifications', 'index')->name('all-notifications');
+        Route::get('/customer-all-notifications', 'customerIndex')->name('customer.all-notifications');
         Route::post('/notifications/bulk-delete', 'bulkDeleteCustomer')->name('notifications.bulk_delete');
         Route::get('/notification/read-and-redirect/{id}', 'readAndRedirect')->name('notification.read-and-redirect');
         Route::get('/non-linkable-notification-read', 'nonLinkableNotificationRead')->name('non-linkable-notification-read');
@@ -267,7 +268,7 @@ Route::group(['middleware' => ['user', 'verified', 'unbanned']], function () {
 // Checkout Routs
 Route::group(['prefix' => 'checkout'], function () {
     Route::controller(CheckoutController::class)->group(function () {
-        // Route::get('/', 'get_shipping_info')->name('checkout.shipping_info');
+        Route::get('/get_shipping_info', 'get_shipping_info')->name('checkout.shipping_info');
         Route::get('/', 'index')->name('checkout');
         Route::any('/delivery-info', 'store_shipping_info')->name('checkout.store_shipping_infostore');
         Route::post('/payment-select', 'store_delivery_info')->name('checkout.store_delivery_info');

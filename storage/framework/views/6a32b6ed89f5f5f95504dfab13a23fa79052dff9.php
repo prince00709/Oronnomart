@@ -109,7 +109,7 @@
 </section>
 
 <!-- footer subscription & icons -->
-<section class="py-3 text-light footer-widget border-bottom" style="border-color: #3d3d46 !important; background-color: #212129 !important;">
+<section class="py-3 text-light footer-widget border-bottom" style="border-color: #3d3d46 !important; background-color:rgb(0, 0, 0) !important;">
     <div class="container">
         <!-- footer logo -->
         <div class="mt-3 mb-4">
@@ -124,7 +124,7 @@
         <div class="row">
             <!-- about & subscription -->
             <div class="col-xl-6 col-lg-7">
-                <div class="mb-4 text-secondary text-justify">
+                <div class="mb-4 text-secondary text-justify fw-bold">
                     <?php echo get_setting('about_us_description',null,App::getLocale()); ?>
 
                 </div>
@@ -150,7 +150,8 @@
             <div class="col-xxl-3 col-xl-4 col-lg-4">
                 <!-- Social -->
                 <?php if( get_setting('show_social_links') ): ?>
-                    <h5 class="fs-14 fw-700 text-secondary text-uppercase mt-3 mt-lg-0"><?php echo e(translate('Follow Us')); ?></h5>
+                    <h5 class=" fw-bold text-secondary text-uppercase mt-3 mt-lg-0"><?php echo e(translate('Follow Us')); ?></h5>
+
                     <ul class="list-inline social colored mb-4">
                         <?php if(!empty(get_setting('facebook_link'))): ?>
                             <li class="list-inline-item ml-2 mr-2">
@@ -187,7 +188,7 @@
 
                 <!-- Apps link -->
                 <?php if((get_setting('play_store_link') != null) || (get_setting('app_store_link') != null)): ?>
-                    <h5 class="fs-14 fw-700 text-secondary text-uppercase mt-3"><?php echo e(translate('Mobile Apps')); ?></h5>
+                    <h5 class="fw-bold text-secondary text-uppercase mt-3"><?php echo e(translate('Mobile Apps')); ?></h5>
                     <div class="d-flex mt-3">
                         <div class="">
                             <a href="<?php echo e(get_setting('play_store_link')); ?>" target="_blank" class="mr-2 mb-2 overflow-hidden hov-scale-img">
@@ -207,359 +208,107 @@
     </div>
 </section>
 
-<?php
-    $col_values = ((get_setting('vendor_system_activation') == 1) || addon_is_activated('delivery_boy')) ? "col-lg-3 col-md-6 col-sm-6" : "col-md-4 col-sm-6";
-?>
-<section class="py-lg-3 text-light footer-widget" style="background-color: #212129 !important;">
-    <!-- footer widgets ========== [Accordion Fotter widgets are bellow from this]-->
-    <div class="container d-none d-lg-block">
+<footer class="pt-3 text-white pb-2" style="border-color: #3d3d46 !important; background-color:rgb(0, 0, 0) !important;">
+    <div class="container">
         <div class="row">
-            <!-- Quick links -->
-            <div class="<?php echo e($col_values); ?>">
-                <div class="text-center text-sm-left mt-4">
-                    <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3">
-                        <?php echo e(get_setting('widget_one',null,App::getLocale())); ?>
-
-                    </h4>
-                    <ul class="list-unstyled">
-                        <?php if( get_setting('widget_one_labels',null,App::getLocale()) !=  null ): ?>
-                            <?php $__currentLoopData = json_decode( get_setting('widget_one_labels',null,App::getLocale()), true); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php
-								$widget_one_links = '';
-								if(isset(json_decode(get_setting('widget_one_links'), true)[$key])) {
-									$widget_one_links = json_decode(get_setting('widget_one_links'), true)[$key];
-								}
-							?>
-                            <li class="mb-2">
-                                <a href="<?php echo e($widget_one_links); ?>" class="fs-13 text-soft-light animate-underline-white">
-                                    <?php echo e($value); ?>
-
-                                </a>
-                            </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
+            <!-- Contacts Section -->
+            <div class="col-md-4">
+                <h5 class="text-uppercase fw-bold">Contacts</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-3">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        <span><?php echo e(get_setting('contact_address', null, App::getLocale())); ?></span>
+                        
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-phone-alt me-2"></i>
+                        <span><?php echo e(get_setting('contact_phone')); ?></span>
+                    </li>
+                    <li class="mb-3">
+                        <i class="fas fa-envelope me-2"></i>
+                        <a href="mailto:<?php echo e(get_setting('contact_email')); ?>" class="text-light"><?php echo e(get_setting('contact_email')); ?></a>
+                    </li>
+                </ul>
             </div>
 
-            <!-- Contacts -->
-            <div class="<?php echo e($col_values); ?>">
-                <div class="text-center text-sm-left mt-4">
-                    <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3"><?php echo e(translate('Contacts')); ?></h4>
-                    <ul class="list-unstyled">
-                        <li class="mb-2">
-                            <p  class="fs-13 text-secondary mb-1"><?php echo e(translate('Address')); ?></p>
-                            <p  class="fs-13 text-soft-light"><?php echo e(get_setting('contact_address',null,App::getLocale())); ?></p>
-                        </li>
-                        <li class="mb-2">
-                            <p  class="fs-13 text-secondary mb-1"><?php echo e(translate('Phone')); ?></p>
-                            <p  class="fs-13 text-soft-light"><?php echo e(get_setting('contact_phone')); ?></p>
-                        </li>
-                        <li class="mb-2">
-                            <p  class="fs-13 text-secondary mb-1"><?php echo e(translate('Email')); ?></p>
-                            <p  class="">
-                                <a href="mailto:<?php echo e(get_setting('contact_email')); ?>" class="fs-13 text-soft-light hov-text-primary"><?php echo e(get_setting('contact_email')); ?></a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- My Account -->
-            <div class="<?php echo e($col_values); ?>">
-                <div class="text-center text-sm-left mt-4">
-                    <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3"><?php echo e(translate('My Account')); ?></h4>
-                    <ul class="list-unstyled">
-                        <?php if(Auth::check()): ?>
-                            <li class="mb-2">
-                                <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('logout')); ?>">
-                                    <?php echo e(translate('Logout')); ?>
-
-                                </a>
-                            </li>
-                        <?php else: ?>
-                            <li class="mb-2">
-                                <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('user.login')); ?>">
-                                    <?php echo e(translate('Login')); ?>
-
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                        <li class="mb-2">
-                            <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('purchase_history.index')); ?>">
-                                <?php echo e(translate('Order History')); ?>
-
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('wishlists.index')); ?>">
-                                <?php echo e(translate('My Wishlist')); ?>
-
-                            </a>
-                        </li>
-                        <li class="mb-2">
-                            <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('orders.track')); ?>">
-                                <?php echo e(translate('Track Order')); ?>
-
-                            </a>
-                        </li>
-                        <?php if(addon_is_activated('affiliate_system')): ?>
-                            <li class="mb-2">
-                                <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('affiliate.apply')); ?>">
-                                    <?php echo e(translate('Be an affiliate partner')); ?>
-
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Seller & Delivery Boy -->
-            <?php if((get_setting('vendor_system_activation') == 1) || addon_is_activated('delivery_boy')): ?>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-                <div class="text-center text-sm-left mt-4">
-                    <!-- Seller -->
-                    <?php if(get_setting('vendor_system_activation') == 1): ?>
-                        <h4 class="fs-14 text-secondary text-uppercase fw-700 mb-3"><?php echo e(translate('Seller Zone')); ?></h4>
-                        <ul class="list-unstyled">
-                            <li class="mb-2">
-                                <p class="fs-13 text-soft-light mb-0">
-                                    <?php echo e(translate('Become A Seller')); ?>
-
-                                    <a href="<?php echo e(route('shops.create')); ?>" class="fs-13 fw-700 text-secondary-base ml-2"><?php echo e(translate('Apply Now')); ?></a>
-                                </p>
-                            </li>
-                            <?php if(auth()->guard()->guest()): ?>
-                                <li class="mb-2">
-                                    <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('seller.login')); ?>">
-                                        <?php echo e(translate('Login to Seller Panel')); ?>
-
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                            <?php if(get_setting('seller_app_link')): ?>
-                                <li class="mb-2">
-                                    <a class="fs-13 text-soft-light animate-underline-white" target="_blank" href="<?php echo e(get_setting('seller_app_link')); ?>">
-                                        <?php echo e(translate('Download Seller App')); ?>
-
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                        </ul>
+            <!-- My Account Section -->
+            <div class="col-md-4">
+                <h5 class="text-uppercase fw-bold">My Account</h5>
+                <ul class="list-unstyled">
+                    <?php if(Auth::check()): ?>
+                        <li class="mb-2"><a href="<?php echo e(route('logout')); ?>" class="text-light"><i class="fas fa-sign-out-alt me-2"></i><?php echo e(translate('Logout')); ?></a></li>
+                    <?php else: ?>
+                        <li class="mb-2"><a href="<?php echo e(route('user.login')); ?>" class="text-light"><i class="fas fa-sign-in-alt me-2"></i><?php echo e(translate('Login')); ?></a></li>
                     <?php endif; ?>
-
-                    <!-- Delivery Boy -->
-                    <?php if(addon_is_activated('delivery_boy')): ?>
-                        <h4 class="fs-14 text-secondary text-uppercase fw-700 mt-4 mb-3"><?php echo e(translate('Delivery Boy')); ?></h4>
-                        <ul class="list-unstyled">
-                            <?php if(auth()->guard()->guest()): ?>
-                                <li class="mb-2">
-                                    <a class="fs-13 text-soft-light animate-underline-white" href="<?php echo e(route('deliveryboy.login')); ?>">
-                                        <?php echo e(translate('Login to Delivery Boy Panel')); ?>
-
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-
-                            <?php if(get_setting('delivery_boy_app_link')): ?>
-                                <li class="mb-2">
-                                    <a class="fs-13 text-soft-light animate-underline-white" target="_blank" href="<?php echo e(get_setting('delivery_boy_app_link')); ?>">
-                                        <?php echo e(translate('Download Delivery Boy App')); ?>
-
-                                    </a>
-                                </li>
-                            <?php endif; ?>
-                        </ul>
+                    <li class="mb-2"><a href="<?php echo e(route('purchase_history.index')); ?>" class="text-light"><i class="fas fa-history me-2"></i><?php echo e(translate('Order History')); ?></a></li>
+                    <li class="mb-2"><a href="<?php echo e(route('wishlists.index')); ?>" class="text-light"><i class="fas fa-heart me-2"></i><?php echo e(translate('My Wishlist')); ?></a></li>
+                    <li class="mb-2"><a href="<?php echo e(route('orders.track')); ?>" class="text-light"><i class="fas fa-map-marker-alt me-2"></i><?php echo e(translate('Track Order')); ?></a></li>
+                    <?php if(addon_is_activated('affiliate_system')): ?>
+                        <li><a href="<?php echo e(route('affiliate.apply')); ?>" class="text-light"><i class="fas fa-user-friends me-2"></i><?php echo e(translate('Be an affiliate partner')); ?></a></li>
                     <?php endif; ?>
-                </div>
+                </ul>
             </div>
-            <?php endif; ?>
-        </div>
-    </div>
 
-    <!-- Accordion Fotter widgets -->
-    <div class="d-lg-none bg-transparent">
-        <!-- Quick links -->
-        <div class="aiz-accordion-wrap bg-black">
-            <div class="aiz-accordion-heading container bg-black">
-                <button class="aiz-accordion fs-14 text-white bg-transparent"><?php echo e(get_setting('widget_one',null,App::getLocale())); ?></button>
-            </div>
-            <div class="aiz-accordion-panel bg-transparent" style="background-color: #212129 !important;">
-                <div class="container">
-                    <ul class="list-unstyled mt-3">
-                        <?php if( get_setting('widget_one_labels',null,App::getLocale()) !=  null ): ?>
-                            <?php $__currentLoopData = json_decode( get_setting('widget_one_labels',null,App::getLocale()), true); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-							<?php
-								$widget_one_links = '';
-								if(isset(json_decode(get_setting('widget_one_links'), true)[$key])) {
-									$widget_one_links = json_decode(get_setting('widget_one_links'), true)[$key];
-								}
-							?>
-                            <li class="mb-2 pb-2 <?php if(url()->current() == $widget_one_links): ?> active <?php endif; ?>">
-                                <a href="<?php echo e($widget_one_links); ?>" class="fs-13 text-soft-light text-sm-secondary animate-underline-white">
-                                    <?php echo e($value); ?>
-
-                                </a>
-                            </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Contacts -->
-        <div class="aiz-accordion-wrap bg-black">
-            <div class="aiz-accordion-heading container bg-black">
-                <button class="aiz-accordion fs-14 text-white bg-transparent"><?php echo e(translate('Contacts')); ?></button>
-            </div>
-            <div class="aiz-accordion-panel bg-transparent" style="background-color: #212129 !important;">
-                <div class="container">
-                    <ul class="list-unstyled mt-3">
-                        <li class="mb-2">
-                            <p  class="fs-13 text-secondary mb-1"><?php echo e(translate('Address')); ?></p>
-                            <p  class="fs-13 text-soft-light"><?php echo e(get_setting('contact_address',null,App::getLocale())); ?></p>
-                        </li>
-                        <li class="mb-2">
-                            <p  class="fs-13 text-secondary mb-1"><?php echo e(translate('Phone')); ?></p>
-                            <p  class="fs-13 text-soft-light"><?php echo e(get_setting('contact_phone')); ?></p>
-                        </li>
-                        <li class="mb-2">
-                            <p  class="fs-13 text-secondary mb-1"><?php echo e(translate('Email')); ?></p>
-                            <p  class="">
-                                <a href="mailto:<?php echo e(get_setting('contact_email')); ?>" class="fs-13 text-soft-light hov-text-primary"><?php echo e(get_setting('contact_email')); ?></a>
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- My Account -->
-        <div class="aiz-accordion-wrap bg-black">
-            <div class="aiz-accordion-heading container bg-black">
-                <button class="aiz-accordion fs-14 text-white bg-transparent"><?php echo e(translate('My Account')); ?></button>
-            </div>
-            <div class="aiz-accordion-panel bg-transparent" style="background-color: #212129 !important;">
-                <div class="container">
-                    <ul class="list-unstyled mt-3">
-                        <?php if(auth()->guard()->check()): ?>
-                            <li class="mb-2 pb-2">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('logout')); ?>">
-                                    <?php echo e(translate('Logout')); ?>
-
-                                </a>
-                            </li>
-                        <?php else: ?>
-                            <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['user.login'],' active')); ?>">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('user.login')); ?>">
-                                    <?php echo e(translate('Login')); ?>
-
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                        <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['purchase_history.index'],' active')); ?>">
-                            <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('purchase_history.index')); ?>">
-                                <?php echo e(translate('Order History')); ?>
-
-                            </a>
-                        </li>
-                        <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['wishlists.index'],' active')); ?>">
-                            <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('wishlists.index')); ?>">
-                                <?php echo e(translate('My Wishlist')); ?>
-
-                            </a>
-                        </li>
-                        <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['orders.track'],' active')); ?>">
-                            <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('orders.track')); ?>">
-                                <?php echo e(translate('Track Order')); ?>
-
-                            </a>
-                        </li>
-                        <?php if(addon_is_activated('affiliate_system')): ?>
-                            <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['affiliate.apply'],' active')); ?>">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('affiliate.apply')); ?>">
-                                    <?php echo e(translate('Be an affiliate partner')); ?>
-
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Seller -->
-        <?php if(get_setting('vendor_system_activation') == 1): ?>
-        <div class="aiz-accordion-wrap bg-black">
-            <div class="aiz-accordion-heading container bg-black">
-                <button class="aiz-accordion fs-14 text-white bg-transparent"><?php echo e(translate('Seller Zone')); ?></button>
-            </div>
-            <div class="aiz-accordion-panel bg-transparent" style="background-color: #212129 !important;">
-                <div class="container">
-                    <ul class="list-unstyled mt-3">
-                        <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['shops.create'],' active')); ?>">
-                            <p class="fs-13 text-soft-light text-sm-secondary mb-0">
-                                <?php echo e(translate('Become A Seller')); ?>
-
-                                <a href="<?php echo e(route('shops.create')); ?>" class="fs-13 fw-700 text-secondary-base ml-2"><?php echo e(translate('Apply Now')); ?></a>
-                            </p>
-                        </li>
+            <!-- Seller & Delivery Boy Section -->
+            <div class="col-md-4">
+                <?php if(get_setting('vendor_system_activation') == 1): ?>
+                    <h5 class="text-uppercase fw-bold">Seller Zone</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="<?php echo e(route('shops.create')); ?>" class="text-light"><i class="fas fa-store me-2"></i><?php echo e(translate('Become A Seller')); ?></a></li>
                         <?php if(auth()->guard()->guest()): ?>
-                            <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['deliveryboy.login'],' active')); ?>">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('seller.login')); ?>">
-                                    <?php echo e(translate('Login to Seller Panel')); ?>
-
-                                </a>
-                            </li>
+                            <li class="mb-2"><a href="<?php echo e(route('seller.login')); ?>" class="text-light"><i class="fas fa-user-circle me-2"></i><?php echo e(translate('Login to Seller Panel')); ?></a></li>
                         <?php endif; ?>
                         <?php if(get_setting('seller_app_link')): ?>
-                            <li class="mb-2 pb-2">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" target="_blank" href="<?php echo e(get_setting('seller_app_link')); ?>">
-                                    <?php echo e(translate('Download Seller App')); ?>
-
-                                </a>
-                            </li>
+                            <li><a href="<?php echo e(get_setting('seller_app_link')); ?>" class="text-light"><i class="fas fa-mobile-alt me-2"></i><?php echo e(translate('Download Seller App')); ?></a></li>
                         <?php endif; ?>
                     </ul>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
+                <?php endif; ?>
 
-        <!-- Delivery Boy -->
-        <?php if(addon_is_activated('delivery_boy')): ?>
-        <div class="aiz-accordion-wrap bg-black">
-            <div class="aiz-accordion-heading container bg-black">
-                <button class="aiz-accordion fs-14 text-white bg-transparent"><?php echo e(translate('Delivery Boy')); ?></button>
-            </div>
-            <div class="aiz-accordion-panel bg-transparent" style="background-color: #212129 !important;">
-                <div class="container">
-                    <ul class="list-unstyled mt-3">
+                <?php if(addon_is_activated('delivery_boy')): ?>
+                    <h5 class="text-uppercase mt-4 fw-bold">Delivery Boy</h5>
+                    <ul class="list-unstyled">
                         <?php if(auth()->guard()->guest()): ?>
-                            <li class="mb-2 pb-2 <?php echo e(areActiveRoutes(['deliveryboy.login'],' active')); ?>">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" href="<?php echo e(route('deliveryboy.login')); ?>">
-                                    <?php echo e(translate('Login to Delivery Boy Panel')); ?>
-
-                                </a>
-                            </li>
+                            <li class="mb-2"><a href="<?php echo e(route('deliveryboy.login')); ?>" class="text-light"><i class="fas fa-user-circle me-2"></i><?php echo e(translate('Login to Delivery Boy Panel')); ?></a></li>
                         <?php endif; ?>
                         <?php if(get_setting('delivery_boy_app_link')): ?>
-                            <li class="mb-2 pb-2">
-                                <a class="fs-13 text-soft-light text-sm-secondary animate-underline-white" target="_blank" href="<?php echo e(get_setting('delivery_boy_app_link')); ?>">
-                                    <?php echo e(translate('Download Delivery Boy App')); ?>
+                            <li><a href="<?php echo e(get_setting('delivery_boy_app_link')); ?>" class="text-light"><i class="fas fa-mobile-alt me-2"></i><?php echo e(translate('Download Delivery Boy App')); ?></a></li>
+                        <?php endif; ?>
+                    </ul>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</footer>
 
-                                </a>
-                            </li>
+<footer class="pt-2 pb-xl-2 bg-black text-soft-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Copyright -->
+            <div class="col-lg-6 order-1 order-lg-0">
+                <div class="text-center text-lg-left fs-14" current-verison="<?php echo e(get_setting("current_version")); ?>">
+                    <?php echo get_setting('frontend_copyright_text', null, App::getLocale()); ?>
+
+                </div>
+            </div>
+
+            <!-- Payment Method Images -->
+            <div class="col-lg-6 mb-2 mb-lg-0">
+                <div class="text-center text-lg-right">
+                    <ul class="list-inline mb-0">
+                        <?php if( get_setting('payment_method_images') !=  null ): ?>
+                            <?php $__currentLoopData = explode(',', get_setting('payment_method_images')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <li class="list-inline-item mr-3">
+                                    <img src="<?php echo e(uploaded_asset($value)); ?>" height="20" class="mw-100 h-auto" style="max-height: 20px" alt="<?php echo e(translate('payment_method')); ?>">
+                                </li>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
                     </ul>
                 </div>
             </div>
         </div>
-        <?php endif; ?>
     </div>
-</section>
+</footer>
+
 
 <?php
     $file = base_path("/public/assets/myText.txt");
@@ -578,35 +327,7 @@
     }
 ?>
 
-<!-- FOOTER -->
-<footer class="pt-3 pb-7 pb-xl-3 bg-black text-soft-light">
-    <div class="container">
-        <div class="row align-items-center py-3">
-            <!-- Copyright -->
-            <div class="col-lg-6 order-1 order-lg-0">
-                <div class="text-center text-lg-left fs-14" current-verison="<?php echo e(get_setting("current_version")); ?>">
-                    <?php echo get_setting('frontend_copyright_text', null, App::getLocale()); ?>
 
-                </div>
-            </div>
-
-            <!-- Payment Method Images -->
-            <div class="col-lg-6 mb-4 mb-lg-0">
-                <div class="text-center text-lg-right">
-                    <ul class="list-inline mb-0">
-                        <?php if( get_setting('payment_method_images') !=  null ): ?>
-                            <?php $__currentLoopData = explode(',', get_setting('payment_method_images')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <li class="list-inline-item mr-3">
-                                    <img src="<?php echo e(uploaded_asset($value)); ?>" height="20" class="mw-100 h-auto" style="max-height: 20px" alt="<?php echo e(translate('payment_method')); ?>">
-                                </li>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php endif; ?>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
 
 <!-- Mobile bottom nav -->
 <div class="aiz-mobile-bottom-nav d-xl-none fixed-bottom border-top border-sm-bottom border-sm-left border-sm-right mx-auto mb-sm-2" style="background-color: rgb(255 255 255 / 90%)!important;">

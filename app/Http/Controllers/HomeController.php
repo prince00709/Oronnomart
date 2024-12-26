@@ -48,8 +48,11 @@ class HomeController extends Controller
         $featured_categories = Cache::rememberForever('featured_categories', function () {
             return Category::with('bannerImage')->where('featured', 1)->get();
         });
+        $video_slider_files = json_decode(get_setting('video_slider_files'), true);
+        $video_slider_links = json_decode(get_setting('video_slider_links'), true);
+    
 
-        return view('frontend.' . get_setting('homepage_select') . '.index', compact('featured_categories', 'lang'));
+        return view('frontend.' . get_setting('homepage_select') . '.index', compact('featured_categories', 'lang','video_slider_files', 'video_slider_links'));
     }
 
     public function load_todays_deal_section()

@@ -29,6 +29,12 @@
 							{{ translate('Home Slider') }}
 						</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" id="video-slider-tab" href="#video_slider"
+							data-toggle="tab" data-target="#video_slider" type="button" role="tab" aria-controls="video_slider" aria-selected="false">
+							{{ translate('Video Slider') }}
+						</a>
+					</li>
 					<!-- Today's Deal -->
 					<li class="nav-item">
 						<a class="nav-link" id="todays-deal-tab" href="#todays_deal"
@@ -230,6 +236,128 @@
 												</div>
 											</div>'
 											data-target=".home-slider-target">
+											<i class="las la-2x text-success la-plus-circle"></i>
+											<span class="ml-2">{{ translate('Add New') }}</span>
+										</button>
+									</div>
+								</div>
+								<!-- Save Button -->
+								<div class="mt-4 text-right">
+									<button type="submit" class="btn btn-success w-230px btn-md rounded-2 fs-14 fw-700 shadow-success">{{ translate('Save') }}</button>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!-- Video Slider -->
+					<div class="tab-pane fade" id="video_slider" role="tabpanel" aria-labelledby="video-slider-tab">
+						<form action="{{ route('business_settings.update') }}" method="POST" enctype="multipart/form-data">
+							@csrf
+							<input type="hidden" name="tab" value="video_slider">
+							<input type="hidden" name="types[][{{ $lang }}]" value="video_slider_files">
+							<input type="hidden" name="types[][{{ $lang }}]" value="video_slider_links">
+
+							<div class="bg-white p-3 p-sm-2rem">
+								<div class="w-100">
+									<!-- Information -->
+									<div class="fs-11 d-flex mb-2rem">
+										<div>
+											<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+												<path d="M8,16a8,8,0,1,1,8-8A8.024,8.024,0,0,1,8,16ZM8,1.333A6.667,6.667,0,1,0,14.667,8,6.686,6.686,0,0,0,8,1.333Z" fill="#9da3ae"/>
+												<path d="M10.6,15a.926.926,0,0,1-.667-.333c-.333-.467-.067-1.133.667-2.933.133-.267.267-.6.4-.867a.714.714,0,0,1-.933-.067.644.644,0,0,1,0-.933A3.408,3.408,0,0,1,11.929,9a.926.926,0,0,1,.667.333c.333.467.067,1.133-.667,2.933-.133.267-.267.6-.4.867a.714.714,0,0,1,.933.067.644.644,0,0,1,0,.933A3.408,3.408,0,0,1,10.6,15Z" transform="translate(-3.262 -3)" fill="#9da3ae"/>
+												<circle cx="1" cy="1" r="1" transform="translate(8 3.333)" fill="#9da3ae"/>
+											</svg>
+										</div>
+										<div class="ml-2 text-gray">
+											<div class="mb-2">{{ translate('Recommended video formats: MP4, WebM. Maximum size: 10MB.') }}</div>
+											<div>{{ translate('Ensure that your video files are optimized for fast loading and good quality.') }}</div>
+										</div>
+									</div>
+
+									<!-- Videos & links -->
+									<div class="video-slider-target">
+										@php
+											$video_slider_files = get_setting('video_slider_files', null, $lang);
+											$video_slider_links = get_setting('video_slider_links', null, $lang);
+										@endphp
+										@if ($video_slider_files != null)
+											@foreach (json_decode($video_slider_files, true) as $key => $value)
+												<div class="p-3 p-md-4 mb-3 mb-md-2rem remove-parent" style="border: 1px dashed #e4e5eb;">
+													<div class="row gutters-5">
+														<!-- Video File -->
+														<div class="col-md-5">
+															<div class="form-group mb-md-0">
+																<div class="input-group" data-toggle="aizuploader" data-type="video">
+																	<div class="input-group-prepend">
+																		<div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse')}}</div>
+																	</div>
+																	<div class="form-control file-amount">{{ translate('Choose File') }}</div>
+																	<input type="hidden" name="video_slider_files[]" class="selected-files" value="{{ json_decode($video_slider_files, true)[$key] }}">
+																</div>
+																<div class="file-preview box sm">
+																</div>
+															</div>
+														</div>
+														<!-- Link -->
+														<div class="col-md">
+															<div class="form-group mb-md-0">
+																<input type="text" class="form-control" placeholder="http://" name="video_slider_links[]" value="{{ isset(json_decode($video_slider_links, true)[$key]) ? json_decode($video_slider_links, true)[$key] : '' }}">
+															</div>
+														</div>
+														<!-- Remove Button -->
+														<div class="col-md-auto">
+															<div class="form-group mb-md-0">
+																<button type="button" class="mt-1 btn btn-icon btn-circle btn-sm btn-soft-danger" data-toggle="remove-parent" data-parent=".remove-parent">
+																	<i class="las la-times"></i>
+																</button>
+															</div>
+														</div>
+													</div>
+												</div>
+											@endforeach
+										@endif
+									</div>
+
+									<!-- Add button -->
+									<div class="">
+										<button
+											type="button"
+											class="btn btn-block border hov-bg-soft-secondary fs-14 rounded-0 d-flex align-items-center justify-content-center" style="background: #fcfcfc;"
+											data-toggle="add-more"
+											data-content='
+											<div class="p-3 p-md-4 mb-3 mb-md-2rem remove-parent" style="border: 1px dashed #e4e5eb;">
+												<div class="row gutters-5">
+													<!-- Video File -->
+													<div class="col-md-5">
+														<div class="form-group mb-md-0">
+															<div class="input-group" data-toggle="aizuploader" data-type="video">
+																<div class="input-group-prepend">
+																	<div class="input-group-text bg-soft-secondary font-weight-medium">{{ translate('Browse')}}</div>
+																</div>
+																<div class="form-control file-amount">{{ translate('Choose File') }}</div>
+																<input type="hidden" name="video_slider_files[]" class="selected-files" value="">
+															</div>
+															<div class="file-preview box sm">
+															</div>
+														</div>
+													</div>
+													<!-- Link -->
+													<div class="col-md">
+														<div class="form-group mb-md-0">
+															<input type="text" class="form-control" placeholder="http://" name="video_slider_links[]" value="">
+														</div>
+													</div>
+													<!-- Remove Button -->
+													<div class="col-md-auto">
+														<div class="form-group mb-md-0">
+															<button type="button" class="mt-1 btn btn-icon btn-circle btn-sm btn-soft-danger" data-toggle="remove-parent" data-parent=".remove-parent">
+																<i class="las la-times"></i>
+															</button>
+														</div>
+													</div>
+												</div>
+											</div>'
+											data-target=".video-slider-target">
 											<i class="las la-2x text-success la-plus-circle"></i>
 											<span class="ml-2">{{ translate('Add New') }}</span>
 										</button>

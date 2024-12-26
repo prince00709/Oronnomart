@@ -12666,25 +12666,26 @@ input[type="color"]::-webkit-color-swatch {
     margin-top: 6px;
 }
 
-/* floating button section */
-.floating-buttons-section{
+.floating-buttons-section {
     background: transparent;
     height: auto;
     overflow: hidden;
     z-index: 1046;
     position: fixed;
-    top: 50%;
-    left: 0;
+    bottom: 0; /* Move to the bottom */
+    left: 0; /* Align to the left */
     right: auto;
-    padding: 30px;
-    transform: translate(0%, -50%);
+    padding: 15px; /* Adjust padding as needed */
+    transform: translate(0%, 0%); /* Remove vertical centering transformation */
     transition: all 0.4s;
-    overflow: visible;
 }
-[dir="rtl"] .floating-buttons-section{
+
+[dir="rtl"] .floating-buttons-section {
     right: 0;
     left: auto;
+    bottom: 0; /* Keep it at the bottom in RTL as well */
 }
+
 
 /* floating button */
 .aiz-floating-button{
